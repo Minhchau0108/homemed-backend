@@ -20,7 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(passport.initialize());
-app.use(express.static(path.join(__dirname, "public")));
 /* DB Connections */
 mongoose
   .connect(MONGODB_URI, {
