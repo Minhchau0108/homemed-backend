@@ -42,6 +42,7 @@ userController.registerDoctor = async (req, res, next) => {
       field,
       profileURL,
       phone,
+      workingTime,
     } = req.body.formData;
     let doctor = await User.findOne({ email: email });
     if (doctor) return next(new Error("401 - Email already exists"));
@@ -60,6 +61,7 @@ userController.registerDoctor = async (req, res, next) => {
       profileURL,
       phone,
       role,
+      workingTime,
     });
 
     utilsHelper.sendResponse(
