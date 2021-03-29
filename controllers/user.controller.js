@@ -2,7 +2,7 @@ const utilsHelper = require("../helpers/utils.helper");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const Order = require("../models/Order");
-const Prescription = require("../models/prescription");
+const Prescription = require("../models/Prescription");
 const Appointment = require("../models/Appointment");
 const userController = {};
 
