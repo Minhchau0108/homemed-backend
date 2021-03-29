@@ -1,6 +1,6 @@
 const utilsHelper = require("../helpers/utils.helper");
 const Order = require("../models/Order");
-const Prescription = require("../models/prescription");
+const Prescription = require("../models/Prescription");
 const Product = require("../models/Product");
 const orderController = {};
 

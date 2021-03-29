@@ -1,4 +1,4 @@
-const Prescription = require("../models/prescription");
+const Prescription = require("../models/Prescription");
 const utilsHelper = require("../helpers/utils.helper");
 const prescriptionController = {};
 
