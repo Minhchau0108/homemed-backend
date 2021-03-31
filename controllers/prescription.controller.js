@@ -22,7 +22,7 @@ prescriptionController.list = async (req, res, next) => {
     }
     if (!status) {
       totalResults = await Prescription.find().countDocuments();
-      prescriptions = await Order.find({})
+      prescriptions = await Prescription.find({})
         .skip(offset)
         .limit(limit)
         .populate("owner");

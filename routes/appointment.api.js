@@ -39,13 +39,24 @@ router.get(
 );
 /**
  * @route PUT api/appointments/:id
- * @description Admin can view list of appointments
- * @access Admin Required
+ * @description Doctor can update a prescription for an appointment
+ * @access Doctor Required
  */
 router.put(
   "/:id",
   authMiddleware.loginRequired,
   authMiddleware.doctorRequired,
   appointmentController.updateAppointment
+);
+/**
+ * @route PUT api/appointments/:id
+ * @description Doctor can update a prescription for an appointment
+ * @access Doctor Required
+ */
+router.put(
+  "/:id/status",
+  authMiddleware.loginRequired,
+  authMiddleware.doctorRequired,
+  appointmentController.updateStatusAppointment
 );
 module.exports = router;

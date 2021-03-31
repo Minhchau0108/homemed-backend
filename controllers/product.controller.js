@@ -40,7 +40,6 @@ productController.getAllProducts = async (req, res, next) => {
 
     let totalProducts;
     if (category) {
-      console.log("category", category);
       totalProducts = await Product.countDocuments({
         name: new RegExp(name, "i"),
         category: { $in: categorySearch },
@@ -50,6 +49,7 @@ productController.getAllProducts = async (req, res, next) => {
       });
     }
     if (!category) {
+      console.log("running here", name);
       totalProducts = await Product.countDocuments({
         name: new RegExp(name, "i"),
         price: { $gt: min, $lt: max },
@@ -61,8 +61,9 @@ productController.getAllProducts = async (req, res, next) => {
     const offset = limit * (page - 1);
 
     let products;
-    if (categorySearch) {
+    if (categorySearch.length > 0) {
       console.log("categorySearch", categorySearch);
+      console.log("name", name);
       products = await Product.aggregate([
         {
           $match: {
@@ -89,6 +90,7 @@ productController.getAllProducts = async (req, res, next) => {
     console.log("products", products);
 
     if (categorySearch.length === 0) {
+      console.log("ruuning to here", name);
       products = await Product.aggregate([
         {
           $match: {

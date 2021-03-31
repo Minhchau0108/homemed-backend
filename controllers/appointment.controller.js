@@ -71,6 +71,33 @@ appointmentController.updateAppointment = async (req, res, next) => {
     next(error);
   }
 };
+appointmentController.updateStatusAppointment = async (req, res, next) => {
+  try {
+    console.log("req.body", req.body);
+    const appointment = await Appointment.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: req.body.status,
+      },
+      { new: true }
+    )
+      .populate("doctor")
+      .populate("onwer");
+
+    if (!appointment) return next(new Error("Appointment not exists"));
+
+    utilsHelper.sendResponse(
+      res,
+      200,
+      true,
+      { appointment },
+      null,
+      "update apppointment success"
+    );
+  } catch (error) {
+    next(error);
+  }
+};
 
 appointmentController.addAppointment = async (req, res, next) => {
   try {

@@ -45,4 +45,8 @@ router.use("/reactions", reactionApi);
 const doctorApi = require("./doctor.api");
 router.use("/doctors", doctorApi);
 
+// dashboardApi
+const dashboardApi = require("./dashboard.api");
+router.use("/dashboard", dashboardApi);
+
 module.exports = router;

@@ -5,10 +5,12 @@ const postController = {};
 
 postController.list = async (req, res, next) => {
   try {
-    let { page, limit, category, sortBy, ...filter } = { ...req.query };
+    let { page, limit, title } = { ...req.query };
+    page = parseInt(page) || 1;
+    limit = parseInt(limit) || 9;
     let posts;
-    if (category) {
-      posts = await Post.find({ category: { $in: category } })
+    if (title) {
+      posts = await Post.find({ title: new RegExp(title, "i") })
         .populate("category")
         .populate("product")
         .populate({ path: "reviews", populate: { path: "owner" } })
@@ -18,7 +20,7 @@ postController.list = async (req, res, next) => {
         })
         .populate("owner");
     }
-    if (!category) {
+    if (!title) {
       posts = await Post.find()
         .populate("category")
         .populate("product")

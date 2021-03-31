@@ -5,7 +5,7 @@ const appointmentSchema = Schema(
     time: { type: Date },
     status: {
       type: String,
-      enum: ["new", "done", "cancelled"],
+      enum: ["new", "accepted", "done", "cancelled"],
       default: "new",
     },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

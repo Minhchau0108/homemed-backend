@@ -147,7 +147,7 @@ orderController.deleteOrder = async (req, res, next) => {
       },
       { isDeleted: true },
       { new: true }
-    );
+    ).populate("owner");
     if (!order) {
       return next(new Error("order not found or User not authorized"));
     }
