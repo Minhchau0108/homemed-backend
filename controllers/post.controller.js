@@ -44,6 +44,46 @@ postController.list = async (req, res, next) => {
     next(error);
   }
 };
+
+postController.listByCategory = async (req, res, next) => {
+  try {
+    let { category } = { ...req.query };
+    let posts;
+    if (category) {
+      posts = await Post.find({ category: { $in: category } })
+        .populate("category")
+        .populate("product")
+        .populate({ path: "reviews", populate: { path: "owner" } })
+        .populate({
+          path: "reactions",
+          populate: { path: "owner" },
+        })
+        .populate("owner");
+    }
+    if (!category) {
+      posts = await Post.find()
+        .populate("category")
+        .populate("product")
+        .populate({ path: "reviews", populate: { path: "owner" } })
+        .populate({
+          path: "reactions",
+          populate: { path: "owner" },
+        })
+        .populate("owner");
+    }
+
+    utilsHelper.sendResponse(
+      res,
+      200,
+      true,
+      { posts },
+      null,
+      `get ${posts.length} success`
+    );
+  } catch (error) {
+    next(error);
+  }
+};
 postController.getDetailPost = async (req, res, next) => {
   try {
     const post = await Post.findOne({ _id: req.params.id })

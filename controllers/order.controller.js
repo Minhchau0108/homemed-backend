@@ -15,6 +15,7 @@ orderController.createOrder = async (req, res, next) => {
       address: address,
       products: products,
       totalPrice: totalPrice,
+      status: "confirmed",
     });
     utilsHelper.sendResponse(res, 200, true, { order }, null, "Order created");
   } catch (error) {

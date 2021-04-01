@@ -11,6 +11,13 @@ const authMiddleware = require("../middlewares/authentication");
 router.get("/", postController.list);
 
 /**
+ * @route GET api/posts/category
+ * @description Public user can view list of post
+ * @access Public
+ */
+router.get("/category", postController.listByCategory);
+
+/**
  * @route POST api/posts
  * @description Doctor can create a new post
  * @access Doctor required
