@@ -16,6 +16,7 @@ prescriptionController.list = async (req, res, next) => {
         status: status,
       }).countDocuments();
       prescriptions = await Prescription.find({ status: status })
+        .sort({ createdAt: -1 })
         .skip(offset)
         .limit(limit)
         .populate("owner");
@@ -23,6 +24,7 @@ prescriptionController.list = async (req, res, next) => {
     if (!status) {
       totalResults = await Prescription.find().countDocuments();
       prescriptions = await Prescription.find({})
+        .sort({ createdAt: -1 })
         .skip(offset)
         .limit(limit)
         .populate("owner");

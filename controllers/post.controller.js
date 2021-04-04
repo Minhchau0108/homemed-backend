@@ -11,6 +11,7 @@ postController.list = async (req, res, next) => {
     let posts;
     if (title) {
       posts = await Post.find({ title: new RegExp(title, "i") })
+        .sort({ createdAt: -1 })
         .populate("category")
         .populate("product")
         .populate({ path: "reviews", populate: { path: "owner" } })
@@ -22,6 +23,7 @@ postController.list = async (req, res, next) => {
     }
     if (!title) {
       posts = await Post.find()
+        .sort({ createdAt: -1 })
         .populate("category")
         .populate("product")
         .populate({ path: "reviews", populate: { path: "owner" } })

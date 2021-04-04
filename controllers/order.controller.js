@@ -78,6 +78,7 @@ orderController.getAllOrders = async (req, res, next) => {
     if (status) {
       totalResults = await Order.find({ status: status }).countDocuments();
       orders = await Order.find({ status: status })
+        .sort({ createdAt: -1 })
         .skip(offset)
         .limit(limit)
         .populate("customer");
@@ -85,6 +86,7 @@ orderController.getAllOrders = async (req, res, next) => {
     if (!status) {
       totalResults = await Order.find().countDocuments();
       orders = await Order.find({})
+        .sort({ createdAt: -1 })
         .skip(offset)
         .limit(limit)
         .populate("customer");
