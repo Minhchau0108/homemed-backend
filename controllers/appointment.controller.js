@@ -1,5 +1,6 @@
 const Appointment = require("../models/Appointment");
 const utilsHelper = require("../helpers/utils.helper");
+const emailsHelper = require("../helpers/email");
 const appointmentController = {};
 
 appointmentController.getAllAppointment = async (req, res, next) => {
@@ -105,6 +106,7 @@ appointmentController.addAppointment = async (req, res, next) => {
       ...req.body.formData,
       owner: req.userId,
     });
+    if (appointment) emailsHelper.sendTestEmail();
     utilsHelper.sendResponse(
       res,
       200,
