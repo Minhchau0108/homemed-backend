@@ -515,6 +515,7 @@ userController.getAllDoctors = async (req, res, next) => {
         field: field,
         name: new RegExp(name, "i"),
       })
+        .populate("reviews")
         .skip(offset)
         .limit(limit);
     }
