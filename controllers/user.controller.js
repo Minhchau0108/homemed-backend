@@ -284,7 +284,7 @@ userController.getCurrentUserPrescriptionDashboard = async (req, res, next) => {
 // GET LIST APPOINTMENT OF CURRENT USER
 userController.getCurrentUserAppointment = async (req, res, next) => {
   try {
-    let { page, limit, sortBy, ...filter } = { ...req.query };
+    let { page, limit, status, sortBy, ...filter } = { ...req.query };
     page = parseInt(page) || 1;
     limit = parseInt(limit) || 10;
 
@@ -304,21 +304,43 @@ userController.getCurrentUserAppointment = async (req, res, next) => {
       );
     }
 
-    const totalAppointments = await Appointment.find({
-      owner: userId,
-      ...filter,
-      isDeleted: false,
-    }).countDocuments();
+    let totalAppointments;
+    if (!status) {
+      totalAppointments = await Appointment.find({
+        owner: userId,
+        ...filter,
+        isDeleted: false,
+      }).countDocuments();
+    }
+    if (status) {
+      totalAppointments = await Appointment.find({
+        owner: userId,
+        status: status,
+        ...filter,
+        isDeleted: false,
+      }).countDocuments();
+    }
 
     const totalPages = Math.ceil(totalAppointments / limit);
     const offset = limit * (page - 1);
     // current user request its Prescription or Admin request user's prescription
-    const appointments = await Appointment.find({ owner: userId })
-      .sort({ ...sortBy, createdAt: -1 })
-      .skip(offset)
-      .limit(limit)
-      .populate("owner")
-      .populate("doctor");
+    let appointments;
+    if (status) {
+      appointments = await Appointment.find({ owner: userId, status: status })
+        .sort({ ...sortBy, createdAt: -1 })
+        .skip(offset)
+        .limit(limit)
+        .populate("owner")
+        .populate("doctor");
+    }
+    if (!status) {
+      appointments = await Appointment.find({ owner: userId })
+        .sort({ ...sortBy, createdAt: -1 })
+        .skip(offset)
+        .limit(limit)
+        .populate("owner")
+        .populate("doctor");
+    }
 
     // in case no appointments
     if (!appointments)
