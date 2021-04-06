@@ -118,6 +118,7 @@ postController.getPostByDoctor = async (req, res, next) => {
     let { page, limit, sortBy, ...filter } = { ...req.query };
 
     const posts = await Post.find({ owner: req.params.id })
+      .sort({ createdAt: -1 })
       .populate("category")
       .populate("product")
       .populate({ path: "reviews", populate: { path: "owner" } })
